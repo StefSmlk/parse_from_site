@@ -1,59 +1,6 @@
 from mysql.connector import Error, connect
 
 
-# def drop_table():
-#     try:
-#         with connect(
-#                 host="localhost",
-#                 user='stef',
-#                 password='1234',
-#                 database='some_companies',
-#         ) as connection:
-#             drop_table_query = "DROP TABLE companies"
-#             with connection.cursor() as cursor:
-#                 cursor.execute(drop_table_query)
-#     except Error as e:
-#         print(e)
-#
-#
-# drop_table()
-
-# def delete_from_table():
-#     try:
-#         with connect(
-#                 host="localhost",
-#                 user='stef',
-#                 password='1234',
-#                 database='some_companies',
-#         ) as connection:
-#             delete_query = "DELETE FROM companies"
-#             with connection.cursor() as cursor:
-#                 cursor.execute(delete_query)
-#                 connection.commit()
-#     except Error as e:
-#         print(e)
-#
-#
-# delete_from_table()
-
-
-try:
-    with connect(
-            host="localhost",
-            user='stef',
-            password='1234',
-            database='some_companies',
-    ) as connection:
-        select_movies_query = "SELECT * FROM companies"
-        with connection.cursor() as cursor:
-            cursor.execute(select_movies_query)
-            result = cursor.fetchall()
-            for row in result:
-                print(row)
-except Error as e:
-    print(e)
-
-
 def create_database():
     try:
         with connect(

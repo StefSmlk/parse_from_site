@@ -18,7 +18,14 @@ def get_all_pages(pages):
     pages_lst = []
     for page in pages:
         with url_request.urlopen(page) as response:
-            pages_lst.append(page)
+            html_from_page = response.read()
+        parse_html_all = BeautifulSoup(html_from_page, 'html.parser')
+        paginate_temp = parse_html_all.find_all(class_='paging-list')
+        if paginate_temp:    # if there is a pagination on a page, makes links for another pages
+            paginate = len(paginate_temp[0].find_all('a')) - 1
+            for i in range(paginate):
+                pages_lst.append(page + f'/{i + 2}')
+        pages_lst.append(page)
     return pages_lst
 
 
@@ -35,7 +42,7 @@ def get_html_from_pages(pages):
             html_from_page = response.read()
         parse_html_all = BeautifulSoup(html_from_page, 'html.parser')
         for company_info in parse_html_all.find_all(class_='company-item'):
-            company_id = str(company_info.a.attrs.get('href')).split('/')[2]
+            company_id = str(company_info.a.attrs.get('href')).split('/')[2]  # get company id to make a link
             links.append(f'https://www.rusprofile.ru/id/{company_id}')
     return links
 
